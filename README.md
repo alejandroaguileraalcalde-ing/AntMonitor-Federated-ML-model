@@ -142,6 +142,10 @@ sess.run(init)
 saver.save(sess, "/content/sample_data/h"+"/checkpoint_name_Ant_v16.ckpt")
 ```
 
+### Important information: 
+
+In order to use this model in an Android app, you can **only use TF libraries, not keras or others**.
+
 ### References: 
 
  (1)[TensorFlow](https://www.tensorflow.org/)
