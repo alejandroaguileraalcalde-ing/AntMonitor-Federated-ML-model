@@ -19,14 +19,14 @@ filtracion_serialnumber = tf.placeholder(tf.float32, name='serialnumber_input')
 filtracion_macaddress = tf.placeholder(tf.float32, name='macaddress_input')
 filtracion_advertiser = tf.placeholder(tf.float32, name='advertiser_input')
 
-#destinos: 5 posibles--> Internal, Ads, Analytics, Sns, Develop               1 o 0 si se manda ahi o no
+#destinos: 5 posibles--> Internal, Ads, Analytics, Sns, Develop             
 destino_internal = tf.placeholder(tf.float32, name='internal_dst_input')
 destino_ads = tf.placeholder(tf.float32, name='ads_dst_input')
 destino_analytics = tf.placeholder(tf.float32, name='analytics_dst_input')
 destino_sns = tf.placeholder(tf.float32, name='sns_dst_input')
 destino_develop = tf.placeholder(tf.float32, name='develop_dst_input')
 
-#objetivo: answer: 1 ò 0
+
 y_ = tf.placeholder(tf.float32, name='target')
 
 #distintos pesos para cada dato: nombre= Px
@@ -47,7 +47,7 @@ Psns_dst = tf.Variable(9., name='Psns_dst')
 Pdevelop_dst = tf.Variable(1., name='Pdevelop_dst') 
 
 
-#salida del modelo
+
 y_aux1 = tf.add(tf.multiply(filtracion_location, Plocation), 0.0)
 y_aux2 = tf.add(tf.multiply(filtracion_email, Pemail), y_aux1)
 y_aux3 = tf.add(tf.multiply(filtracion_imei, Pimei), y_aux2)
@@ -68,6 +68,7 @@ y_aux_final1 = tf.add(tf.multiply(filtracion_advertiser, Padvertiser), y_aux14)
 
 y = tf.multiply(y_aux_final1, y_aux5_dst)
 
+#salida del modelo
 y = tf.identity(y, name='output')
 
 
@@ -89,8 +90,7 @@ saver_def = tf.train.Saver().as_saver_def()
 with open('graph_Ant_v16.pb', 'wb') as f:
   f.write(tf.get_default_graph().as_graph_def().SerializeToString())
 
-# cuidado si no es la primera vez que se ejecuta, los nombres cambian y aparecen más de una variable
-# de las que habrian normalmente. Aqui es w y b, pero si se hace dos veces salen w1 yb1 y asi...
+
 print('Operation to initialize variables:       ', init.name)
 print('Tensor to feed as input data:            ', filtracion_location.name)
 print('Tensor to feed as input data:            ', filtracion_email.name)
